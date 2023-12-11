@@ -1,3 +1,5 @@
 import BirthdayInput from "./birthday";
 import DeathAge from "./earthday";
-export { BirthdayInput, DeathAge };
+import SurvivalGrid from "./survivalGrid";
+import Loader from "./loader";
+export { BirthdayInput, DeathAge, SurvivalGrid, Loader };

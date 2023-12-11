@@ -1,0 +1,21 @@
+/* SurvivalGrid.css */
+.survival-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10px, 1fr));
+  grid-gap: 1px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.grid-cell {
+  width: 10px;
+  height: 10px;
+}
+
+.alive {
+  background-color: green;
+}
+
+.not-alive {
+  background-color: lightgray;
+}
