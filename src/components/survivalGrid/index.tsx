@@ -4,7 +4,7 @@ import { Loader } from "@/components";
 import "./style.css";
 
 const SurvivalGrid = ({ userData }: any) => {
-  const { birthday, expectedAge } = userData;
+  const { birthday, expectedAge, range } = userData;
 
   // 计算总的存活天数
   const totalDays = expectedAge * 365;
@@ -30,6 +30,7 @@ const SurvivalGrid = ({ userData }: any) => {
       <p>total days: {totalDays}</p>
       <p>days have lived: {daysLived}</p>
       <p>remaining days: {totalDays - daysLived}</p>
+      <p>time range: {range}</p>
       <div className="survival-grid">
         {survivalArray.map((alive, index) => (
           <div

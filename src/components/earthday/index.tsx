@@ -3,12 +3,15 @@ const DeathAge = ({ handleChagne }: any) => {
     handleChagne(e.target.value);
   };
   return (
-    <input
-      type="number"
-      min={0}
-      onChange={deathAgeChange}
-      placeholder="Desire max age"
-    />
+    <div>
+      Deathday: 
+      <input
+        type="number"
+        min={0}
+        onChange={deathAgeChange}
+        placeholder="Desire max age"
+      />
+    </div>
   );
 };
 
