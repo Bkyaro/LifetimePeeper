@@ -1,10 +1,24 @@
+import VanillaCalendar from "../datePicker";
+
 const BirthdayInput = ({ handleChange }: any) => {
-  const birthdayInputChange = (e: any) => {
-    handleChange(e.target.value);
+  const birthdayInputChange = (date: any) => {
+    handleChange(date);
   };
   return (
     <div>
-      Birthday: <input type="date" onChange={birthdayInputChange} />
+      <div className="datePickerWrapper">
+        <VanillaCalendar
+          config={{
+            type: "default",
+            actions: {
+              clickDay(e, self) {
+                console.log("choosed day:", self.selectedDates[0]);
+                birthdayInputChange(self.selectedDates[0]);
+              },
+            },
+          }}
+        />
+      </div>
     </div>
   );
 };

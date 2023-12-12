@@ -4,7 +4,7 @@ import { Loader } from "@/components";
 import "./style.css";
 
 const SurvivalGrid = ({ userData }: any) => {
-  const { birthday, expectedAge, range } = userData;
+  const { birthday, expectedAge = 0, range } = userData;
 
   // 计算总的存活天数
   const totalDays = expectedAge * 365;

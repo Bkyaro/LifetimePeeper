@@ -6,7 +6,6 @@ function GridRange({ range, handleRangeChange }: any) {
 
   return (
     <div>
-      <span>Time range:</span>
       <div className="swithcers">
         {rangeTag.map((item, index) => {
           return (

@@ -18,7 +18,7 @@ export default function Home() {
   }
 
   const [birthday, setBirthday] = useState<string>("");
-  const [maxAge, setMaxAge] = useState<number>(0);
+  const [maxAge, setMaxAge] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
   const [range, setRange] = useState<Duration>(Duration.Day);
 
@@ -34,7 +34,7 @@ export default function Home() {
     <div className={styles.main}>
       {title()}
       <BirthdayInput handleChange={setBirthday} />
-      <DeathAge handleChagne={setMaxAge} />
+      <DeathAge handleChange={setMaxAge} maxAge={maxAge} />
       <GridRange range={range} handleRangeChange={setRange} />
       <SurvivalGrid
         userData={{ birthday: birthday, expectedAge: maxAge, range }}

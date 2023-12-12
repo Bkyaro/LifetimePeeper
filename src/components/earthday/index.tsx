@@ -1,16 +1,25 @@
-const DeathAge = ({ handleChagne }: any) => {
+import "./style.css";
+const DeathAge = ({ handleChange, maxAge }: any) => {
+  const ageLimit = { min: 0, max: 130 };
   const deathAgeChange = (e: any) => {
-    handleChagne(e.target.value);
+    if (
+      !e.target.value ||
+      (e.target.value < ageLimit.max && e.target.value > ageLimit.min)
+    ) {
+      handleChange(e.target.value);
+    }
   };
   return (
     <div>
-      Deathday: 
       <input
-        type="number"
-        min={0}
+        className="input"
+        min={ageLimit.min}
+        max={ageLimit.max}
         onChange={deathAgeChange}
         placeholder="Desire max age"
-      />
+        type="number"
+        value={maxAge}
+      ></input>
     </div>
   );
 };
