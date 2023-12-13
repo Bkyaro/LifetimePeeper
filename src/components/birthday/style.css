@@ -1,0 +1,21 @@
+.datePickerWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.vanilla-calendar {
+  /* display: none; */
+  position: relative;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(1rem);
+  pointer-events: none;
+}
+
+.vanilla-calendar-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}

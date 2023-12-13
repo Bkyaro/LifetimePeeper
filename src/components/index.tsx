@@ -4,4 +4,13 @@ import SurvivalGrid from "./survivalGrid";
 import Loader from "./loader";
 import GridRange from "./gridRange";
 import Switch from "./switch";
-export { BirthdayInput, DeathAge, SurvivalGrid, Loader, GridRange, Switch };
+import GlobalButton from "./gloablButton";
+export {
+  BirthdayInput,
+  DeathAge,
+  SurvivalGrid,
+  Loader,
+  GridRange,
+  Switch,
+  GlobalButton,
+};

@@ -1,0 +1,28 @@
+.button_wrapper {
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #e8e8e8;
+  --button_outline_color: #000000;
+  --main-color: #323232;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  cursor: pointer;
+  border: 2px solid var(--main-color);
+  box-shadow: 4px 4px var(--main-color);
+  transition: all 0.3s;
+}
+
+.button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1em;
+}
+
+.button_wrapper:hover{
+  box-shadow: 2px 2px var(--main-color);
+}
