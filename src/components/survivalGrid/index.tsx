@@ -23,6 +23,28 @@ const SurvivalGrid = ({ userData }: any) => {
   const survivalArray = new Array(totalDays).fill(false);
   survivalArray.fill(true, 0, daysLived);
 
+  const colors = [
+    "#f9f871",
+    "#eef074",
+    "#e3e877",
+    "#d8e07b",
+    "#cdd97e",
+    "#c2d181",
+    "#b7c985",
+    "#adc288",
+    "#a2ba8c",
+    "#97b28f",
+    "#8cab92",
+    "#81a396",
+    "#769b99",
+  ];
+
+  const getApproximateSeat = (index: number) => {
+    const precentage: any = (index / survivalArray.length).toFixed(1);
+    const approximateSeat: any = (colors.length * precentage).toFixed(0);
+    return colors[approximateSeat];
+  };
+
   return birthday && expectedAge ? (
     <>
       <p>birthday: {birthday}</p>
@@ -35,7 +57,10 @@ const SurvivalGrid = ({ userData }: any) => {
         {survivalArray.map((alive, index) => (
           <div
             key={index}
-            className={`grid-cell ${alive ? "alive" : "not-alive"}`}
+            style={{
+              backgroundColor: alive ? `${getApproximateSeat(index)}` : "white",
+            }}
+            className={`grid-cell `}
           />
         ))}
       </div>

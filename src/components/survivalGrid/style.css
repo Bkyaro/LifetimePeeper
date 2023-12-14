@@ -18,4 +18,5 @@
 
 .not-alive {
   background-color: lightgray;
+  background-color: none !important;
 }
