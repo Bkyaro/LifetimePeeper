@@ -6,7 +6,7 @@ const GlobalButton = ({ text, handleButtonTrigger }: any) => {
     <button
       className="button_wrapper"
       onMouseEnter={handleButtonTrigger}
-      // onMouseLeave={handleButtonTrigger}
+      onMouseLeave={handleButtonTrigger}
     >
       <span className="button_top">{text}</span>
     </button>

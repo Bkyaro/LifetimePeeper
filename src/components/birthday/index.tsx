@@ -9,7 +9,6 @@ const BirthdayInput = ({ handleChange }: any) => {
   let userDate = date.toISOString().split("T")[0];
 
   const handleButtonTrigger = (trigger: boolean) => {
-    console.log("??");
     document
       .querySelector(".vanilla-calendar")
       ?.classList.toggle("vanilla-calendar-active");
