@@ -8,17 +8,11 @@ const BirthdayInput = ({ handleChange }: any) => {
   let date = new Date();
   let userDate = date.toISOString().split("T")[0];
 
-  const handleButtonClick = (e: any) => {
-    e.preventDefault();
-    if (
-      e.currentTarget.previousElementSibling.classList.contains(
-        "vanilla-calendar"
-      )
-    ) {
-      e.currentTarget.previousElementSibling.classList.toggle(
-        "vanilla-calendar-active"
-      );
-    }
+  const handleButtonTrigger = (trigger: boolean) => {
+    console.log("??");
+    document
+      .querySelector(".vanilla-calendar")
+      ?.classList.toggle("vanilla-calendar-active");
   };
   return (
     <div>
@@ -37,10 +31,13 @@ const BirthdayInput = ({ handleChange }: any) => {
                 // @ts-ignore
                 max: `${userDate}`,
               },
-            }
+            },
           }}
         />
-        <GlobalButton text={"Birthday"} handleButtonClick={handleButtonClick} />
+        <GlobalButton
+          text={"Birthday"}
+          handleButtonTrigger={handleButtonTrigger}
+        />
       </div>
     </div>
   );
