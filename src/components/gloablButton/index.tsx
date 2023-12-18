@@ -1,13 +1,9 @@
 import React from "react";
 import "./styles.css";
 
-const GlobalButton = ({ text, handleButtonTrigger }: any) => {
+const GlobalButton = ({ text, handleButtonClick }: any) => {
   return (
-    <button
-      className="button_wrapper"
-      onMouseEnter={handleButtonTrigger}
-      onMouseLeave={handleButtonTrigger}
-    >
+    <button className="button_wrapper" onClick={handleButtonClick}>
       <span className="button_top">{text}</span>
     </button>
   );

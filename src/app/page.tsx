@@ -36,9 +36,7 @@ export default function Home() {
       <BirthdayInput handleChange={setBirthday} />
       <DeathAge handleChange={setMaxAge} maxAge={maxAge} />
       <GridRange range={range} handleRangeChange={setRange} />
-      <SurvivalGrid
-        userData={{ birthday: birthday, expectedAge: maxAge, range }}
-      />
+      <SurvivalGrid userData={{ birthday, maxAge, range }} />
     </div>
   );
 }

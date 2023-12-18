@@ -1,106 +1,112 @@
-// SurvivalGrid.tsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Loader } from "@/components";
 import colors from "@/utils/colors";
 import dayjs from "dayjs";
+import type { ConfigType } from "dayjs";
 import "./style.css";
 
-const SurvivalGrid = ({ userData }: any) => {
-  const { birthday, expectedAge = 0, range } = userData;
+interface UserData {
+  birthday: string;
+  maxAge?: number;
+  range?: string; // 定义具体类型而不是 any
+}
 
-  const [currentDay, setCurrentDay] = useState(dayjs());
-  const [userBirthday, setUserBirthday] = useState(dayjs(birthday));
-  const [userDeathday, setUserDeathday] = useState(
-    dayjs(birthday).add(expectedAge, "years")
-  );
-  const [totalDays, setTotalDays] = useState(
-    userDeathday.diff(userBirthday, "days")
-  );
-  const [daysLived, setDaysLived] = useState(
-    currentDay.diff(userBirthday, "days")
-  );
-  const [daysRemaining, setDaysRemaining] = useState(totalDays - daysLived);
+const SurvivalGrid = ({ userData }: { userData: UserData }) => {
+  const { birthday, maxAge = 0, range } = userData;
 
-  /**
-   * 已有:
-   *  获取用户生日 Birth
-   *  获取用户寿命 Life
-   *  获取当前日期 Today
-   *
-   * 需计算:
-   *  颗粒度-天
-   *    总天数 = Birth + Life
-   *    已存活 = 总天数 - Birth
-   *    未存活 = 总天数 - 已存活
-   *
-   *  颗粒度-周
-   *    总周数
-   *    已存活
-   *    未存活
-   *
-   *  颗粒度-月
-   *    总月数
-   *    已存活
-   *    未存活
-   *
-   *  颗粒度-年
-   *    总年数
-   *    已存活
-   *    未存活
-   */
+  const [dates, setDates] = useState({
+    currentDay: dayjs(),
+    userBirthday: dayjs(birthday),
+    userDeathday: dayjs(birthday).add(maxAge, "years"),
+    totalDays: 0,
+    daysLived: 0,
+    daysRemaining: 0,
+    lifeArray: [],
+  });
+  const canvasRef = useRef(null);
 
   useEffect(() => {
-    // 用户生日
-    setCurrentDay(dayjs());
-    setUserBirthday(dayjs(birthday));
-    setUserDeathday(dayjs(birthday).add(expectedAge, "years"));
-    setTotalDays(userDeathday.diff(userBirthday, "days"));
-    setDaysLived(currentDay.diff(userBirthday, "days"));
-    setDaysRemaining(totalDays - daysLived);
-  }, [birthday, expectedAge, range]);
+    const userBirthday = dayjs(birthday);
+    const deathday = userBirthday.add(maxAge, "years");
+    const today = dayjs();
 
-  // 计算总的存活天数
-  // const totalDays = expectedAge * 365;
+    const totalDays = deathday.diff(userBirthday, "days");
+    const daysLived = today.diff(userBirthday, "days");
+    const daysRemaining = totalDays - daysLived;
+    // div display
+    if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+    }
+    const test: any = [];
 
-  // 计算用户已经存活的天数
-  // const birthDate = new Date(birthday);
-  // const currentDate = new Date();
-  // const daysLived = Math.floor(
-  //   (currentDate - birthDate) / (1000 * 60 * 60 * 24)
-  // );
+    setDates({
+      currentDay: today,
+      userBirthday,
+      userDeathday: deathday,
+      totalDays,
+      daysLived,
+      daysRemaining,
+      lifeArray: test,
+    });
+  }, [birthday, maxAge, range]);
 
-  // // 计算待存活的天数
-  // const daysRemaining = totalDays - daysLived;
-
-  // // 创建一个表示存活状态的数组，true 代表存活，false 代表未来的日子
-  // const survivalArray = new Array(totalDays).fill(false);
-  // survivalArray.fill(true, 0, daysLived);
+  const {
+    currentDay,
+    userBirthday,
+    userDeathday,
+    totalDays,
+    daysLived,
+    daysRemaining,
+    lifeArray,
+  } = dates;
 
   // const getApproximateSeat = (index: number) => {
-  //   const precentage: any = (index / survivalArray.length).toFixed(1);
+  //   const precentage: any = (index / dates.survivalArray.length).toFixed(1);
   //   const approximateSeat: any = (colors.length * precentage).toFixed(0);
   //   return colors[approximateSeat];
   // };
 
-  return birthday && expectedAge ? (
+  // canvas display
+  // const survivalCanvas = (daysLived: any, totalDays: any) => {
+  //   let canvas: HTMLCanvasElement | null = document.createElement("canvas");
+  //   console.log("cavas", canvas);
+  //   const context = canvas.getContext("2d");
+
+  //   // 假设每个格子是10x10像素
+  //   const cellSize = 10;
+  //   for (let i = 0; i < totalDays; i++) {
+  //     const x = (i % 400) * cellSize;
+  //     const y = Math.floor(i / 400) * cellSize;
+
+  //     context.fillStyle = i < daysLived ? "green" : "gray"; // 存活和未来的颜色
+  //     context.fillRect(x, y, cellSize, cellSize);
+  //   }
+
+  //   return <canvas ref={canvasRef} width={400 * 10} height={2000 * 10} />;
+  // };
+
+  return birthday && maxAge ? (
     <>
       <p>currentDay: {currentDay.format("YYYY-MM-DD")}</p>
       <p>birthday: {userBirthday.format("YYYY-MM-DD")}</p>
       <p>deathday: {userDeathday.format("YYYY-MM-DD")}</p>
       <p>totalDays: {totalDays}</p>
-      <p>daysLived: {daysLived}</p>
+      <p>daysLived: {daysLived > totalDays ? totalDays : daysLived}</p>
       <p>daysRemaining: {daysRemaining}</p>
 
       <div className="survival-grid">
-        {/* {survivalArray.map((alive, index) => (
-          <div
-            key={index}
-            // style={{
-            //   backgroundColor: alive ? `${getApproximateSeat(index)}` : "white",
-            // }}
-            className={`grid-cell `}
-          />
-        ))} */}
+        {/* {survivalCanvas(daysLived, totalDays)} */}
+        {/* {dates.survivalArray &&
+          dates.survivalArray.map((alive, index) => (
+            <div
+              key={index}
+              style={{
+                backgroundColor: alive
+                  ? `${getApproximateSeat(index)}`
+                  : "white",
+              }}
+              className={`grid-cell `}
+            />
+          ))} */}
       </div>
     </>
   ) : (
