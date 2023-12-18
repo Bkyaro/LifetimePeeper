@@ -21,22 +21,92 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
     totalDays: 0,
     daysLived: 0,
     daysRemaining: 0,
-    lifeArray: [],
+    survivalArray: [],
   });
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const userBirthday = dayjs(birthday);
-    const deathday = userBirthday.add(maxAge, "years");
-    const today = dayjs();
+    let userBirthday = dayjs(birthday);
+    let deathday = userBirthday.add(maxAge, "years");
+    let today = dayjs();
 
-    const totalDays = deathday.diff(userBirthday, "days");
-    const daysLived = today.diff(userBirthday, "days");
-    const daysRemaining = totalDays - daysLived;
-    // div display
-    if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+    let totalDays;
+    let daysLived;
+    let daysRemaining;
+    let survivalArray: any = [];
+
+    switch (range) {
+      case "year":
+        totalDays = deathday.diff(userBirthday, "year");
+        daysLived = today.diff(userBirthday, "year");
+        console.log("totalDays -- year", totalDays);
+        daysRemaining = totalDays - daysLived;
+        console.log("daysRemaining = totalDays - daysLived", {
+          daysRemaining,
+          totalDays,
+          daysLived,
+        });
+        // div display
+        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+          survivalArray = [];
+          for (let i = 0; i < totalDays; i++) {
+            if (i < daysLived) {
+              survivalArray.push(true);
+            } else {
+              survivalArray.push(false);
+            }
+          }
+        }
+        break;
+      case "month":
+        totalDays = deathday.diff(userBirthday, "month");
+        daysLived = today.diff(userBirthday, "month");
+        console.log("totalDays -- month", totalDays);
+        daysRemaining = totalDays - daysLived;
+        // div display
+        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+          for (let i = 0; i < totalDays; i++) {
+            if (i < daysLived) {
+              survivalArray.push(true);
+            } else {
+              survivalArray.push(false);
+            }
+          }
+        }
+        break;
+      case "week":
+        totalDays = deathday.diff(userBirthday, "week");
+        daysLived = today.diff(userBirthday, "week");
+        console.log("totalDays -- week", totalDays);
+        daysRemaining = totalDays - daysLived;
+        // div display
+        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+          for (let i = 0; i < totalDays; i++) {
+            if (i < daysLived) {
+              survivalArray.push(true);
+            } else {
+              survivalArray.push(false);
+            }
+          }
+        }
+        break;
+      default:
+        totalDays = deathday.diff(userBirthday, "days");
+        daysLived = today.diff(userBirthday, "days");
+        console.log("totalDays -- days", totalDays);
+        daysRemaining = totalDays - daysLived;
+        // div display
+        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
+          for (let i = 0; i < totalDays; i++) {
+            if (i < daysLived) {
+              survivalArray.push(true);
+            } else {
+              survivalArray.push(false);
+            }
+          }
+        }
+        break;
     }
-    const test: any = [];
 
     setDates({
       currentDay: today,
@@ -45,7 +115,7 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       totalDays,
       daysLived,
       daysRemaining,
-      lifeArray: test,
+      survivalArray: survivalArray,
     });
   }, [birthday, maxAge, range]);
 
@@ -56,14 +126,17 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
     totalDays,
     daysLived,
     daysRemaining,
-    lifeArray,
+    survivalArray,
   } = dates;
 
-  // const getApproximateSeat = (index: number) => {
-  //   const precentage: any = (index / dates.survivalArray.length).toFixed(1);
-  //   const approximateSeat: any = (colors.length * precentage).toFixed(0);
-  //   return colors[approximateSeat];
-  // };
+  console.log("survivalArray", survivalArray);
+
+  const getApproximateSeat = (index: number) => {
+    const precentage: any = index / survivalArray.length;
+    const approximateSeat: any = (colors.length * precentage).toFixed(0);
+    console.log("precentage, approximateSeat", [precentage, approximateSeat]);
+    return colors[approximateSeat];
+  };
 
   // canvas display
   // const survivalCanvas = (daysLived: any, totalDays: any) => {
@@ -86,17 +159,28 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
 
   return birthday && maxAge ? (
     <>
-      <p>currentDay: {currentDay.format("YYYY-MM-DD")}</p>
-      <p>birthday: {userBirthday.format("YYYY-MM-DD")}</p>
-      <p>deathday: {userDeathday.format("YYYY-MM-DD")}</p>
-      <p>totalDays: {totalDays}</p>
-      <p>daysLived: {daysLived > totalDays ? totalDays : daysLived}</p>
-      <p>daysRemaining: {daysRemaining}</p>
+      <p>Today 📅: {currentDay.format("YYYY-MM-DD")}</p>
+      <p>Birthday 👶🏻: {userBirthday.format("YYYY-MM-DD")}</p>
+      <p>Deathday 💀: {userDeathday.format("YYYY-MM-DD")}</p>
+      <p>
+        Total {range} 📃: {totalDays}
+      </p>
+      <p>
+        {range && range.charAt(0).toUpperCase() + range.slice(1)} lived 🎉:{" "}
+        {daysLived > totalDays ? totalDays : daysLived}
+      </p>
+      <p>
+        Remaining {range} ⏳: {daysRemaining > 0 ? daysRemaining : "vanished"}
+      </p>
+      <p>
+        {range && range.charAt(0).toUpperCase() + range.slice(1)} after vanished
+        💀: {daysRemaining < 0 ? Math.abs(daysRemaining) : "still alive"}
+      </p>
 
       <div className="survival-grid">
         {/* {survivalCanvas(daysLived, totalDays)} */}
-        {/* {dates.survivalArray &&
-          dates.survivalArray.map((alive, index) => (
+        {survivalArray &&
+          survivalArray.map((alive, index) => (
             <div
               key={index}
               style={{
@@ -106,7 +190,7 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
               }}
               className={`grid-cell `}
             />
-          ))} */}
+          ))}
       </div>
     </>
   ) : (
