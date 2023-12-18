@@ -39,13 +39,8 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       case "year":
         totalDays = deathday.diff(userBirthday, "year");
         daysLived = today.diff(userBirthday, "year");
-        console.log("totalDays -- year", totalDays);
         daysRemaining = totalDays - daysLived;
-        console.log("daysRemaining = totalDays - daysLived", {
-          daysRemaining,
-          totalDays,
-          daysLived,
-        });
+
         // div display
         if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
           survivalArray = [];
@@ -61,7 +56,6 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       case "month":
         totalDays = deathday.diff(userBirthday, "month");
         daysLived = today.diff(userBirthday, "month");
-        console.log("totalDays -- month", totalDays);
         daysRemaining = totalDays - daysLived;
         // div display
         if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
@@ -77,7 +71,6 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       case "week":
         totalDays = deathday.diff(userBirthday, "week");
         daysLived = today.diff(userBirthday, "week");
-        console.log("totalDays -- week", totalDays);
         daysRemaining = totalDays - daysLived;
         // div display
         if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
@@ -93,7 +86,6 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       default:
         totalDays = deathday.diff(userBirthday, "days");
         daysLived = today.diff(userBirthday, "days");
-        console.log("totalDays -- days", totalDays);
         daysRemaining = totalDays - daysLived;
         // div display
         if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
@@ -129,19 +121,15 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
     survivalArray,
   } = dates;
 
-  console.log("survivalArray", survivalArray);
-
   const getApproximateSeat = (index: number) => {
     const precentage: any = index / survivalArray.length;
     const approximateSeat: any = (colors.length * precentage).toFixed(0);
-    console.log("precentage, approximateSeat", [precentage, approximateSeat]);
     return colors[approximateSeat];
   };
 
   // canvas display
   // const survivalCanvas = (daysLived: any, totalDays: any) => {
   //   let canvas: HTMLCanvasElement | null = document.createElement("canvas");
-  //   console.log("cavas", canvas);
   //   const context = canvas.getContext("2d");
 
   //   // 假设每个格子是10x10像素

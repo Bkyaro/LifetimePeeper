@@ -4,12 +4,13 @@
 # Roadmap
 ### feature
 - [ ] 🙃🙃🙃
+- [x] birthday input
+- [x] customize max age
+- [x] week view
+- [x] month view
+- [x] year view
 ### deving
-- [ ] birthday input
 - [ ] customize life event
-- [ ] customize max age
 - [ ] customize life section color
-- [ ] week view
-- [ ] month view
-- [ ] year view
+- [ ] update page styling
 - [ ] pdf / image export
