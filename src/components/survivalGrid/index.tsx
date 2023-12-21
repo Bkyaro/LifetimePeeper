@@ -8,7 +8,7 @@ import "./style.css";
 interface UserData {
   birthday: string;
   maxAge?: number;
-  range?: string; // 定义具体类型而不是 any
+  range?: string;
 }
 
 const SurvivalGrid = ({ userData }: { userData: UserData }) => {
@@ -21,84 +21,26 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
     totalDays: 0,
     daysLived: 0,
     daysRemaining: 0,
-    survivalArray: [],
+    survivalArray: [] as boolean[],
   });
-  const canvasRef = useRef(null);
 
   useEffect(() => {
-    let userBirthday = dayjs(birthday);
-    let deathday = userBirthday.add(maxAge, "years");
-    let today = dayjs();
+    const userBirthday = dayjs(birthday);
+    const deathday = userBirthday.add(maxAge, "years");
+    const today = dayjs();
 
-    let totalDays;
-    let daysLived;
-    let daysRemaining;
-    let survivalArray: any = [];
+    const calculateDays = (unit: "year" | "month" | "week" | "day") => {
+      const totalDays = deathday.diff(userBirthday, unit);
+      const daysLived = today.diff(userBirthday, unit);
+      return { totalDays, daysLived, daysRemaining: totalDays - daysLived };
+    };
 
-    switch (range) {
-      case "year":
-        totalDays = deathday.diff(userBirthday, "year");
-        daysLived = today.diff(userBirthday, "year");
-        daysRemaining = totalDays - daysLived;
+    const { totalDays, daysLived, daysRemaining } = calculateDays(range as any);
 
-        // div display
-        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
-          survivalArray = [];
-          for (let i = 0; i < totalDays; i++) {
-            if (i < daysLived) {
-              survivalArray.push(true);
-            } else {
-              survivalArray.push(false);
-            }
-          }
-        }
-        break;
-      case "month":
-        totalDays = deathday.diff(userBirthday, "month");
-        daysLived = today.diff(userBirthday, "month");
-        daysRemaining = totalDays - daysLived;
-        // div display
-        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
-          for (let i = 0; i < totalDays; i++) {
-            if (i < daysLived) {
-              survivalArray.push(true);
-            } else {
-              survivalArray.push(false);
-            }
-          }
-        }
-        break;
-      case "week":
-        totalDays = deathday.diff(userBirthday, "week");
-        daysLived = today.diff(userBirthday, "week");
-        daysRemaining = totalDays - daysLived;
-        // div display
-        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
-          for (let i = 0; i < totalDays; i++) {
-            if (i < daysLived) {
-              survivalArray.push(true);
-            } else {
-              survivalArray.push(false);
-            }
-          }
-        }
-        break;
-      default:
-        totalDays = deathday.diff(userBirthday, "days");
-        daysLived = today.diff(userBirthday, "days");
-        daysRemaining = totalDays - daysLived;
-        // div display
-        if (!Number.isNaN(totalDays) && !Number.isNaN(daysLived)) {
-          for (let i = 0; i < totalDays; i++) {
-            if (i < daysLived) {
-              survivalArray.push(true);
-            } else {
-              survivalArray.push(false);
-            }
-          }
-        }
-        break;
-    }
+    const survivalArray = Array.from(
+      { length: totalDays },
+      (_, i) => i < daysLived
+    );
 
     setDates({
       currentDay: today,
@@ -127,24 +69,6 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
     return colors[approximateSeat];
   };
 
-  // canvas display
-  // const survivalCanvas = (daysLived: any, totalDays: any) => {
-  //   let canvas: HTMLCanvasElement | null = document.createElement("canvas");
-  //   const context = canvas.getContext("2d");
-
-  //   // 假设每个格子是10x10像素
-  //   const cellSize = 10;
-  //   for (let i = 0; i < totalDays; i++) {
-  //     const x = (i % 400) * cellSize;
-  //     const y = Math.floor(i / 400) * cellSize;
-
-  //     context.fillStyle = i < daysLived ? "green" : "gray"; // 存活和未来的颜色
-  //     context.fillRect(x, y, cellSize, cellSize);
-  //   }
-
-  //   return <canvas ref={canvasRef} width={400 * 10} height={2000 * 10} />;
-  // };
-
   return birthday && maxAge ? (
     <>
       <p>Today 📅: {currentDay.format("YYYY-MM-DD")}</p>
@@ -166,7 +90,6 @@ const SurvivalGrid = ({ userData }: { userData: UserData }) => {
       </p>
 
       <div className="survival-grid">
-        {/* {survivalCanvas(daysLived, totalDays)} */}
         {survivalArray &&
           survivalArray.map((alive, index) => (
             <div

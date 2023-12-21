@@ -26,6 +26,7 @@ const BirthdayInput = ({ handleChange }: any) => {
             onChange={onChange}
             showToday={false}
             disabledDate={disabledDate}
+            allowClear={false}
           />
         </Space>
         <GlobalButton text={"Birthday"} />

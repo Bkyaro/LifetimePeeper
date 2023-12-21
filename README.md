@@ -13,4 +13,5 @@
 - [ ] customize life event
 - [ ] customize life section color
 - [ ] update page styling
+- [ ] data visualization with charts
 - [ ] pdf / image export
