@@ -20,7 +20,7 @@ export default function Home() {
   const [birthday, setBirthday] = useState<string>("");
   const [maxAge, setMaxAge] = useState<number | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(true);
-  const [range, setRange] = useState<Duration>(Duration.Day);
+  const [range, setRange] = useState<Duration>(Duration.Year);
 
   useEffect(() => {
     console.log({ birthday, maxAge, range });
