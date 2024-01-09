@@ -23,6 +23,7 @@ const BirthdayInput = ({ handleChange }: any) => {
       <div className="datePickerWrapper">
         <Space direction="vertical">
           <DatePicker
+            style={{ width: "100%" }}
             onChange={onChange}
             showToday={false}
             disabledDate={disabledDate}
